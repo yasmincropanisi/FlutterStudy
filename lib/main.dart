@@ -28,24 +28,28 @@ class XylophoneApp extends StatelessWidget {
     var buttons = List<FlatButton>();
     for (int i = 1; i <= total; i++) {
       buttons.add(
-        FlatButton(
-          shape: RoundedRectangleBorder(
-            side: BorderSide.none,
-            borderRadius: BorderRadius.circular(10),
-          ),
-          color: Color((Random().nextDouble() * 0xFFFFFF).toInt() << 0)
-              .withOpacity(1.0),
-          onPressed: () {
-            final player = AudioCache();
-            player.play('note$i.wav');
-          },
-          child: Text(
-            'Click me',
-            style: TextStyle(color: Colors.white),
-          ),
-        ),
+        _buildPlayableButton(audio: 'note$i.wav'),
       );
     }
     return buttons;
+  }
+
+  FlatButton _buildPlayableButton({audio: String}) {
+    return FlatButton(
+      shape: RoundedRectangleBorder(
+        side: BorderSide.none,
+        borderRadius: BorderRadius.circular(10),
+      ),
+      color: Color((Random().nextDouble() * 0xFFFFFF).toInt() << 0)
+          .withOpacity(1.0),
+      onPressed: () {
+        final player = AudioCache();
+        player.play(audio);
+      },
+      child: Text(
+        'Click me',
+        style: TextStyle(color: Colors.white),
+      ),
+    );
   }
 }

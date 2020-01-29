@@ -9,23 +9,24 @@ class XylophoneApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
+        backgroundColor: Colors.black,
         body: SafeArea(
-          child: SafeArea(
-            child: Center(
-                child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                ..._playableButtons(total: 7),
-              ],
-            )),
-          ),
+          child: Container(
+              color: Colors.black,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: <Widget>[
+                  ..._playableButtons(total: 7),
+                ],
+              )),
         ),
       ),
     );
   }
 
-  List<FlatButton> _playableButtons({total: int}) {
-    var buttons = List<FlatButton>();
+  List<Expanded> _playableButtons({total: int}) {
+    var buttons = List<Expanded>();
     for (int i = 1; i <= total; i++) {
       buttons.add(
         _buildPlayableButton(audio: 'note$i.wav'),
@@ -34,21 +35,19 @@ class XylophoneApp extends StatelessWidget {
     return buttons;
   }
 
-  FlatButton _buildPlayableButton({audio: String}) {
-    return FlatButton(
-      shape: RoundedRectangleBorder(
-        side: BorderSide.none,
-        borderRadius: BorderRadius.circular(10),
-      ),
-      color: Color((Random().nextDouble() * 0xFFFFFF).toInt() << 0)
-          .withOpacity(1.0),
-      onPressed: () {
-        final player = AudioCache();
-        player.play(audio);
-      },
-      child: Text(
-        'Click me',
-        style: TextStyle(color: Colors.white),
+  Expanded _buildPlayableButton({audio: String}) {
+    return Expanded(
+      child: FlatButton(
+        color: Color((Random().nextDouble() * 0xFFFFFF).toInt() << 0)
+            .withOpacity(1.0),
+        onPressed: () {
+          final player = AudioCache();
+          player.play(audio);
+        },
+        child: Text(
+          '',
+          style: TextStyle(color: Colors.white),
+        ),
       ),
     );
   }
